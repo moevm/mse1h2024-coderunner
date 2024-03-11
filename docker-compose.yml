@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: tail -f /dev/null
+    command: /start
     volumes:
       - .:/app
     ports:
