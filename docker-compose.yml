@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    networks:
+      - celery-redis-network
+
+  app:
+    container_name: test_flask_app
+    image: test_flask_app:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: /start
+    volumes:
+      - .:/app
+    ports:
+      - 5010:5000
+    env_file:
+      - ./conf/.env
+    networks:
+      - celery-redis-network
+    depends_on:
+      - redis
+
+  celery_worker:
+    container_name: celery_worker
+    image: celery_worker:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - ./conf/.env
+    networks:
+      - celery-redis-network
+    depends_on:
+      - redis
+
+  flower:
+    container_name: flower
+    image: celery-flower:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/app
+    env_file:
+      - ./conf/.env
+    networks:
+      - celery-redis-network
+    ports:
+      - 5557:5555
+    depends_on:
+      - redis
+      - celery_worker
+
+networks:
+  celery-redis-network:
+    driver: bridge
+    name: "celery-redis-network"
