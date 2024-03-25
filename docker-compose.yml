@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: ./start
+    command: ./start.sh
     ports:
       - 5000:5000
     env_file:
@@ -40,7 +40,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: ./start-celeryworker
+    command: ./start-celeryworker.sh
     env_file:
       - ./conf/.env
     networks:
@@ -55,7 +55,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: ./start-flower
+    command: ./start-flower.sh
     env_file:
       - ./conf/.env
     networks:
