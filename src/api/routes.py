@@ -1,8 +1,8 @@
-import requests
 from flask import Blueprint
 from flask import request
 
-from src.settings import LANGUAGES, JOBE_SERVER_URL
+from src.settings import LANGUAGES
+from src.tasks import mailer
 
 api = Blueprint('api', __name__, url_prefix='/jobe/index.php/restapi')
 
@@ -10,8 +10,13 @@ api = Blueprint('api', __name__, url_prefix='/jobe/index.php/restapi')
 @api.post('/runs')
 def submit_run():
     request_data = request.get_json()
-    res = requests.post(JOBE_SERVER_URL + '/jobe/index.php/restapi/runs', json=request_data)
-    return res.json(), res.status_code
+    print(request_data);
+    task_result = mailer.delay(request_data)
+    try:
+        result, status_code = task_result.get(timeout=30)
+        return result, status_code
+    except TimeoutError:
+        return "Time limit exceeded", 500
 
 
 @api.get('/languages')

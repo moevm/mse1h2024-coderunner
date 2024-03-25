@@ -8,11 +8,13 @@ RUN apk update && \
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
-COPY ./flask/start /start
-RUN chmod +x /start
+COPY ./src ./src
 
-COPY ./celery/worker/start /start-celeryworker
-RUN chmod +x /start-celeryworker
+COPY ./flask/start ./start
+RUN chmod +x ./start
 
-COPY ./celery/flower/start /start-flower
-RUN chmod +x /start-flower
+COPY ./celery/worker/start ./start-celeryworker
+RUN chmod +x ./start-celeryworker
+
+COPY ./celery/flower/start ./start-flower
+RUN chmod +x ./start-flower

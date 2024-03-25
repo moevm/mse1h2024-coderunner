@@ -8,7 +8,9 @@ CELERY_TASK_ROUTES = {
     'src.tasks.uploader': {'queue': 'replies-queue'},
 }
 
-JOBE_SERVER_URL = os.getenv('JOBE_SERVER_URL', 'http://localhost:8000')
+JOBE_SERVER_URL = os.getenv('JOBE_SERVER_URL', 'http://jobe:80')
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/1")
 
 # List of languages supported by the Jobe server
 LANGUAGES = [
