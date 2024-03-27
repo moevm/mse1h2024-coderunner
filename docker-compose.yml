@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    networks:
+      - celery-redis-jobe-network
+    ports:
+      - 6379:6379
+
+  jobe:
+    container_name: jobe
+    image: trampgeek/jobeinabox:jobe
+    networks:
+      - celery-redis-jobe-network
+    ports:
+      - 8080:80
+
+  flask_app:
+    container_name: flask_app
+    image: flask_app:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./start.sh
+    ports:
+      - 5000:5000
+    env_file:
+      - ./conf/.env
+    networks:
+      - celery-redis-jobe-network
+    depends_on:
+      - redis
+      - jobe
+
+  celery_worker:
+    container_name: celery_worker
+    image: celery_worker:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./start-celeryworker.sh
+    env_file:
+      - ./conf/.env
+    networks:
+      - celery-redis-jobe-network
+    depends_on:
+      - redis
+      - jobe
+
+  flower:
+    container_name: flower
+    image: celery-flower:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./start-flower.sh
+    env_file:
+      - ./conf/.env
+    networks:
+      - celery-redis-jobe-network
+    ports:
+      - 5557:5555
+    depends_on:
+      - redis
+      - celery_worker
+      - jobe
+
+networks:
+  celery-redis-jobe-network:
+    driver: bridge
+    name: "celery-redis-jobe-network"
