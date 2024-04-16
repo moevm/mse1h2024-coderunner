@@ -9,13 +9,37 @@ services:
     ports:
       - 6379:6379
 
-  jobe:
-    container_name: jobe
+  jobe-1:
+    container_name: jobe-1
     image: trampgeek/jobeinabox:jobe
     networks:
       - celery-redis-jobe-network
     ports:
-      - 8080:80
+      - 4001:8881
+
+  jobe-2:
+    container_name: jobe-2
+    image: trampgeek/jobeinabox:jobe
+    networks:
+      - celery-redis-jobe-network
+    ports:
+      - 4002:8882
+
+  jobe-3:
+    container_name: jobe-3
+    image: trampgeek/jobeinabox:jobe
+    networks:
+      - celery-redis-jobe-network
+    ports:
+      - 4003:8883
+
+  jobe-4:
+    container_name: jobe-4
+    image: trampgeek/jobeinabox:jobe
+    networks:
+      - celery-redis-jobe-network
+    ports:
+      - 4004:8884
 
   flask_app:
     container_name: flask_app
@@ -32,7 +56,10 @@ services:
       - celery-redis-jobe-network
     depends_on:
       - redis
-      - jobe
+      - jobe-1
+      - jobe-2
+      - jobe-3
+      - jobe-4
 
   celery_worker:
     container_name: celery_worker
@@ -47,7 +74,10 @@ services:
       - celery-redis-jobe-network
     depends_on:
       - redis
-      - jobe
+      - jobe-1
+      - jobe-2
+      - jobe-3
+      - jobe-4
 
   flower:
     container_name: flower
@@ -65,7 +95,10 @@ services:
     depends_on:
       - redis
       - celery_worker
-      - jobe
+      - jobe-1
+      - jobe-2
+      - jobe-3
+      - jobe-4
 
 networks:
   celery-redis-jobe-network:
