@@ -5,7 +5,7 @@ services:
     container_name: redis
     image: redis:7-alpine
     networks:
-      - celery-redis-jobe-network
+      - common-network
     ports:
       - 6379:6379
 
@@ -13,7 +13,7 @@ services:
     container_name: jobe-1
     image: trampgeek/jobeinabox:jobe
     networks:
-      - celery-redis-jobe-network
+      - common-network
     ports:
       - 4001:8881
 
@@ -53,7 +53,7 @@ services:
     env_file:
       - ./conf/.env
     networks:
-      - celery-redis-jobe-network
+      - common-network
     depends_on:
       - redis
       - jobe-1
@@ -71,7 +71,7 @@ services:
     env_file:
       - ./conf/.env
     networks:
-      - celery-redis-jobe-network
+      - common-network
     depends_on:
       - redis
       - jobe-1
@@ -89,7 +89,7 @@ services:
     env_file:
       - ./conf/.env
     networks:
-      - celery-redis-jobe-network
+      - common-network
     ports:
       - 5557:5555
     depends_on:
@@ -101,6 +101,6 @@ services:
       - jobe-4
 
 networks:
-  celery-redis-jobe-network:
+  common-network:
     driver: bridge
-    name: "celery-redis-jobe-network"
+    name: "common-network"
