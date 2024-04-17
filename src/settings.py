@@ -10,10 +10,10 @@ CELERY_TASK_ROUTES = {
     'src.tasks.jobe_4_task': {'queue': 'jobe-4-queue'},
 }
 
-JOBE_1_SERVER_URL = os.getenv('JOBE_1_SERVER_URL', 'http://jobe-1:8881')
-JOBE_2_SERVER_URL = os.getenv('JOBE_2_SERVER_URL', 'http://jobe-2:8882')
-JOBE_3_SERVER_URL = os.getenv('JOBE_3_SERVER_URL', 'http://jobe-3:8883')
-JOBE_4_SERVER_URL = os.getenv('JOBE_4_SERVER_URL', 'http://jobe-4:8884')
+JOBE_1_SERVER_URL = os.getenv('JOBE_1_SERVER_URL', 'http://jobe-1:80')
+JOBE_2_SERVER_URL = os.getenv('JOBE_2_SERVER_URL', 'http://jobe-2:80')
+JOBE_3_SERVER_URL = os.getenv('JOBE_3_SERVER_URL', 'http://jobe-3:80')
+JOBE_4_SERVER_URL = os.getenv('JOBE_4_SERVER_URL', 'http://jobe-4:80')
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/1")
 

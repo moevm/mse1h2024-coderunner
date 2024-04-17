@@ -15,31 +15,31 @@ services:
     networks:
       - common-network
     ports:
-      - 4001:8881
+      - 8881:80
 
   jobe-2:
     container_name: jobe-2
     image: trampgeek/jobeinabox:jobe
     networks:
-      - celery-redis-jobe-network
+      - common-network
     ports:
-      - 4002:8882
+      - 8882:80
 
   jobe-3:
     container_name: jobe-3
     image: trampgeek/jobeinabox:jobe
     networks:
-      - celery-redis-jobe-network
+      - common-network
     ports:
-      - 4003:8883
+      - 8883:80
 
   jobe-4:
     container_name: jobe-4
     image: trampgeek/jobeinabox:jobe
     networks:
-      - celery-redis-jobe-network
+      - common-network
     ports:
-      - 4004:8884
+      - 8884:80
 
   flask_app:
     container_name: flask_app
