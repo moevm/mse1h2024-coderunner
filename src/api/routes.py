@@ -1,16 +1,24 @@
 from flask import Blueprint
 from flask import request
 
-from src.settings import LANGUAGES
+from src.settings import LANGUAGES, API_KEY
 from src.tasks import mailer
 
 api = Blueprint('api', __name__, url_prefix='/jobe/index.php/restapi')
 
 
+@api.before_request
+def api_key_validation():
+    if API_KEY == '*':
+        return
+    key = request.headers.get('X-API-KEY')
+    if key != API_KEY:
+        return "Invalid API-key", 403
+
+
 @api.post('/runs')
 def submit_run():
     request_data = request.get_json()
-    print(request_data);
     task_result = mailer.delay(request_data)
     try:
         result, status_code = task_result.get(timeout=30)
