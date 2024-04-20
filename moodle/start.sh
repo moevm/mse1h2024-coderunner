@@ -19,7 +19,7 @@ if [ ! -d "/bitnami/moodle/question/type/coderunner" ]; then
 
           echo "Coderunner plugin installed!"
 
-          sudo mysql -h mariadb -u root mariadb < /create_questions.sql
+          sudo mysql -h mariadb -u root mariadb < /create_question.sql
 
           echo "Test task created!"
 

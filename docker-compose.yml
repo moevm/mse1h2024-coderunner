@@ -6,52 +6,41 @@ services:
     image: redis:7-alpine
     networks:
       - common-network
-    ports:
-      - 6379:6379
 
   jobe-1:
     container_name: jobe-1
     image: trampgeek/jobeinabox:jobe
     networks:
       - common-network
-    ports:
-      - 8881:80
 
   jobe-2:
     container_name: jobe-2
     image: trampgeek/jobeinabox:jobe
     networks:
       - common-network
-    ports:
-      - 8882:80
 
   jobe-3:
     container_name: jobe-3
     image: trampgeek/jobeinabox:jobe
     networks:
       - common-network
-    ports:
-      - 8883:80
 
   jobe-4:
     container_name: jobe-4
     image: trampgeek/jobeinabox:jobe
     networks:
       - common-network
-    ports:
-      - 8884:80
 
   flask_app:
     container_name: flask_app
     image: flask_app:1.0.0
     build:
       context: .
-      dockerfile: ./Dockerfile
-    command: ./start.sh
+      dockerfile: flask/Dockerfile
     ports:
-      - 5000:5000
+      - "127.0.0.1:5000:5000"
     env_file:
-      - ./conf/.env
+      - conf/.env
     networks:
       - common-network
     depends_on:
@@ -66,10 +55,9 @@ services:
     image: celery_worker:1.0.0
     build:
       context: .
-      dockerfile: ./Dockerfile
-    command: ./start-celeryworker.sh
+      dockerfile: celery/worker/Dockerfile
     env_file:
-      - ./conf/.env
+      - conf/.env
     networks:
       - common-network
     depends_on:
@@ -84,14 +72,13 @@ services:
     image: celery-flower:1.0.0
     build:
       context: .
-      dockerfile: ./Dockerfile
-    command: ./start-flower.sh
+      dockerfile: celery/flower/Dockerfile
     env_file:
-      - ./conf/.env
+      - conf/.env
     networks:
       - common-network
     ports:
-      - 5557:5555
+      - "127.0.0.1:5557:5555"
     depends_on:
       - redis
       - celery_worker
