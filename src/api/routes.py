@@ -1,11 +1,21 @@
 from flask import Blueprint, request
 
-from src.settings import LANGUAGES
-from src.tasks import jobe_1_task, jobe_2_task, jobe_3_task, jobe_4_task
+from src.settings import LANGUAGES, API_KEY
+from src.tasks import mailer, jobe_1_task, jobe_2_task, jobe_3_task, jobe_4_task
 from src.utils import get_logger
+
 
 api = Blueprint("api", __name__, url_prefix="/jobe/index.php/restapi")
 log = get_logger(__name__)
+
+
+@api.before_request
+def api_key_validation():
+    if API_KEY == '*':
+        return
+    key = request.headers.get('X-API-KEY')
+    if key != API_KEY:
+        return "Invalid API-key", 403
 
 
 @api.post("/runs")

@@ -17,6 +17,10 @@ JOBE_4_SERVER_URL = os.getenv('JOBE_4_SERVER_URL', 'http://jobe-4:80')
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/1")
 
+
+# If specified *, API_KEY is not required
+API_KEY = os.getenv("API_KEY", "*")
+
 # List of languages supported by the Jobe server
 LANGUAGES = [
     [
