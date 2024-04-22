@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 
 from src.settings import LANGUAGES, API_KEY
-from src.tasks import mailer, jobe_1_task, jobe_2_task, jobe_3_task, jobe_4_task
+from src.tasks import jobe_1_task, jobe_2_task, jobe_3_task, jobe_4_task
 from src.utils import get_logger
 
 
