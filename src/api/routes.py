@@ -22,9 +22,9 @@ def api_key_validation():
 def submit_run():
     request_data = request.get_json()
     log.info(request_data)
-    queue=request_data['queue']
-    print(request_data)
-    if not queue:
+    if 'queue' in request_data:
+        queue=request_data['queue']
+    else:    
         queue=1
     if queue==1:
         task_result = jobe_1_task.delay(request_data)
