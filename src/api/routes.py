@@ -22,8 +22,8 @@ def api_key_validation():
 def submit_run():
     request_data = request.get_json()
     log.info(request_data)
-    if 'queue' in request_data:
-        queue=request_data['queue']
+    if 'queue' in request_data['run_spec']['parameters']:
+        queue=request_data['run_spec']['parameters']['queue']
     else:    
         queue=1
     if queue==1:
