@@ -1,7 +1,12 @@
 from flask import Flask, request
 from celery import Celery
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.settings import CELERY_WORKER_BROKER_URL
 
-celery = Celery('tasks', broker='amqp://guest:guest@localhost//')
+celery = Celery('tasks', broker=CELERY_WORKER_BROKER_URL)
+
 
 @celery.task
 def process_request(request_data):

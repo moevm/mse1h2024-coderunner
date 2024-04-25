@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  moodle:
+    container_name: moodle
+    image: moodle:3.8.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8081:80"
+      - "127.0.0.1:8443:443"
+    env_file:
+      - moodle.env
+    volumes:
+      - moodle_data:/bitnami/moodle
+      - moodle_var:/var
+    networks:
+      - common-network
+    depends_on:
+      - mariadb
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb:11.2
+    env_file:
+      - mariadb.env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - common-network
+
+
+networks:
+  common-network:
+    driver: bridge
+    name: "common-network"
+
+volumes:
+  moodle_data:
+  moodle_var:
+  mariadb_data:
