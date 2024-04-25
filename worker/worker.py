@@ -7,6 +7,7 @@ from src.settings import CELERY_WORKER_BROKER_URL
 
 celery = Celery('tasks', broker=CELERY_WORKER_BROKER_URL)
 
+
 @celery.task
 def process_request(request_data):
     print("Received request data:", request_data)
