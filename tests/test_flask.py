@@ -1,6 +1,6 @@
 import requests
 import unittest
-from src.settings import FLASK_APP_URL
+from ..src.settings import FLASK_APP_URL
 
 
 class TestFlask(unittest.TestCase):
