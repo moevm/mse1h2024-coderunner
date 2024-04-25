@@ -20,12 +20,21 @@ def api_key_validation():
 
 @api.post("/runs")
 def submit_run():
+    defaul_queuet=1
     request_data = request.get_json()
     log.info(request_data)
-    if 'queue' in request_data['run_spec']['parameters']:
-        queue=request_data['run_spec']['parameters']['queue']
-    else:    
-        queue=1
+    if 'run_spec' in request_data:
+        if 'parameters' in request_data['run_spec']:
+            if 'queue' in request_data['run_spec']['parameters']:
+                queue=request_data['run_spec']['parameters']['queue']
+            else:    
+                queue=default_queue
+        else:    
+            queue=default_queue
+    else:
+        queue=default_queue
+        
+
     if queue==1:
         task_result = jobe_1_task.delay(request_data)
         
