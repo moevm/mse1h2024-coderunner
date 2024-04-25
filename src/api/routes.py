@@ -20,7 +20,7 @@ def api_key_validation():
 
 @api.post("/runs")
 def submit_run():
-    defaul_queuet=1
+    default_queue=1
     request_data = request.get_json()
     log.info(request_data)
     if 'run_spec' in request_data:
