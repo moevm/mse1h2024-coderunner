@@ -1,7 +1,9 @@
 import requests
 import unittest
-
-flask_app_url = "http://localhost:5000/jobe/index.php/restapi/runs"
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.settings import FLASK_APP_URL
 
 
 class TestFlask(unittest.TestCase):
@@ -15,7 +17,7 @@ class TestFlask(unittest.TestCase):
             }
         }
 
-        response = requests.post(flask_app_url, json=data)
+        response = requests.post(FLASK_APP_URL, json=data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["outcome"], 15)
@@ -32,7 +34,7 @@ class TestFlask(unittest.TestCase):
             }
         }
 
-        response = requests.post(flask_app_url, json=data)
+        response = requests.post(FLASK_APP_URL, json=data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["outcome"], 15)
@@ -46,7 +48,7 @@ class TestFlask(unittest.TestCase):
             }
         }
 
-        response = requests.post(flask_app_url, json=data)
+        response = requests.post(FLASK_APP_URL, json=data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["outcome"], 11)
@@ -60,7 +62,7 @@ class TestFlask(unittest.TestCase):
             }
         }
 
-        response = requests.post(flask_app_url, json=data)
+        response = requests.post(FLASK_APP_URL, json=data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["outcome"], 13)
