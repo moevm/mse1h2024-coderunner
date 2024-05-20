@@ -11,6 +11,15 @@ class TestFlask(unittest.TestCase):
     """A class that tests the basic functionality of the wrapper server
     """
     def test_hello_world(self):
+        """Tests successful execution of a basic C program "Hello, World!"
+
+           Sends a request to the wrapper server. It sends the request for
+           processing to the appropriate Celery queue - by default to 1,
+           unless another is specified in {"parameters": {"queue": N}}.
+           Next, the celery task sends a requests to the corresponding Jobe server.
+           Jobe returns code 200 and JSON-object with a field "outcome" of 15,
+           which means the run completed without any exceptions.
+        """
         data = {
             "run_spec": {
                 "language_id": "c",
