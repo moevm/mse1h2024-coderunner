@@ -2,12 +2,14 @@ import requests
 import unittest
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from src.settings import FLASK_APP_URL
 
 
 class TestFlask(unittest.TestCase):
-
+    """A class that tests the basic functionality of the wrapper server
+    """
     def test_hello_world(self):
         data = {
             "run_spec": {
