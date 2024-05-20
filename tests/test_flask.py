@@ -16,7 +16,8 @@ class TestFlask(unittest.TestCase):
            Sends a request to the wrapper server. It sends the request for
            processing to the appropriate Celery queue - by default to 1,
            unless another is specified in "parameters" in field "queue".
-           Next, the celery task sends a requests to the corresponding Jobe server.
+           Next, the celery task sends a request to the 
+           Jobe server corresponding to the queue number.
            Jobe returns code 200 and JSON-object with a field "outcome" of 15,
            which means the run completed without any exceptions.
         """
@@ -39,7 +40,8 @@ class TestFlask(unittest.TestCase):
            Sends a request to the wrapper server. It sends the request for
            processing to the appropriate Celery queue - by default to 1,
            unless another is specified in in "parameters" in field "queue".
-           Next, the celery task sends a requests to the corresponding Jobe server.
+           Next, the celery task sends a request to the 
+           Jobe server corresponding to the queue number.
            Jobe returns code 200 and JSON-object with a field "outcome" of 15,
            which means the run completed without any exceptions.
         """
@@ -60,6 +62,17 @@ class TestFlask(unittest.TestCase):
         self.assertEqual(response.json()["outcome"], 15)
 
     def test_compilation_error(self):
+        """Tests for a compilation error when executing incorrect
+           code of a basic C program "Hello, World!".
+
+           Sends a request to the wrapper server. It sends the request for
+           processing to the appropriate Celery queue - by default to 1,
+           unless another is specified in in "parameters" in field "queue".
+           Next, the celery task sends a request to the 
+           Jobe server corresponding to the queue number.
+           Jobe returns code 200 and JSON-object with a field "outcome" of 11,
+           which means the compilation error.
+        """
         data = {
             "run_spec": {
                 "language_id": "c",
