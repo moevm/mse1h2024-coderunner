@@ -8,7 +8,7 @@ from src.settings import FLASK_APP_URL
 
 
 class TestFlask(unittest.TestCase):
-    """A class that tests the basic functionality of the wrapper server
+    """A class that tests the basic functionality of the wrapper server.
     """
     def test_hello_world(self):
         """Tests the successful execution of a basic C program "Hello, World!".
@@ -20,6 +20,10 @@ class TestFlask(unittest.TestCase):
            Jobe server corresponding to the queue number.
            Jobe returns code 200 and JSON-object with a field "outcome" of 15,
            which means the run completed without any exceptions.
+
+           The Coderunner server receives the response and processes 
+           it in such a way as to provide feedback to the user. 
+           In this case, the task will be accepted and marked green.
         """
         data = {
             "run_spec": {
@@ -44,6 +48,10 @@ class TestFlask(unittest.TestCase):
            Jobe server corresponding to the queue number.
            Jobe returns code 200 and JSON-object with a field "outcome" of 15,
            which means the run completed without any exceptions.
+
+           The Coderunner server receives the response and processes 
+           it in such a way as to provide feedback to the user. 
+           In this case, the task will be accepted and marked green.
         """
         data = {
             "run_spec": {
@@ -72,6 +80,10 @@ class TestFlask(unittest.TestCase):
            Jobe server corresponding to the queue number.
            Jobe returns code 200 and JSON-object with a field "outcome" of 11,
            which means the compilation error.
+
+           The Coderunner server receives the response and processes 
+           it in such a way as to provide feedback to the user. 
+           In this case, the task will be declined and marked red.
         """
         data = {
             "run_spec": {
@@ -96,6 +108,10 @@ class TestFlask(unittest.TestCase):
            Jobe server corresponding to the queue number.
            Jobe returns code 200 and JSON-object with a field "outcome" of 13,
            which means the time limit for completing the task has been exceeded.
+
+           The Coderunner server receives the response and processes 
+           it in such a way as to provide feedback to the user. 
+           In this case, the task will be declined and marked red.
         """
         data = {
             "run_spec": {
