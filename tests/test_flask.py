@@ -87,6 +87,16 @@ class TestFlask(unittest.TestCase):
         self.assertEqual(response.json()["outcome"], 11)
 
     def test_time_limit_exceeded(self):
+        """Tests that when executing infinite loop code in C, time will be exceeded.
+
+           Sends a request to the wrapper server. It sends the request for
+           processing to the appropriate Celery queue - by default to 1,
+           unless another is specified in in "parameters" in field "queue".
+           Next, the celery task sends a request to the 
+           Jobe server corresponding to the queue number.
+           Jobe returns code 200 and JSON-object with a field "outcome" of 13,
+           which means the time limit for completing the task has been exceeded.
+        """
         data = {
             "run_spec": {
                 "language_id": "c",
