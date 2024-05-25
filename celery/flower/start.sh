@@ -13,6 +13,8 @@ until worker_ready; do
 done
 >&2 echo 'Celery workers is available'
 
+export FLOWER_UNAUTHENTICATED_API=true
+
 celery -A src.celery_configurator  \
     --broker="${CELERY_BROKER_URL}" \
     flower

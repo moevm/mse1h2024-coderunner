@@ -14,8 +14,10 @@ JOBE_1_SERVER_URL = os.getenv('JOBE_1_SERVER_URL', 'http://jobe-1:80')
 JOBE_2_SERVER_URL = os.getenv('JOBE_2_SERVER_URL', 'http://jobe-2:80')
 JOBE_3_SERVER_URL = os.getenv('JOBE_3_SERVER_URL', 'http://jobe-3:80')
 JOBE_4_SERVER_URL = os.getenv('JOBE_4_SERVER_URL', 'http://jobe-4:80')
+JOBE_SERVERS = [JOBE_1_SERVER_URL, JOBE_2_SERVER_URL, JOBE_3_SERVER_URL, JOBE_4_SERVER_URL]
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/1")
+FLOWER_URL = os.getenv("FLOWER_URL", "http://flower:5555")
 CELERY_WORKER_BROKER_URL = os.getenv("CELERY_WORKER_BROKER_URL", "redis://127.0.0.1:6379/0") #заменить на белый IP-адрес, который будет использоваться на сервере
 FLASK_APP_URL = os.getenv("FLASK_APP_URL", "http://localhost:5000/jobe/index.php/restapi/runs")
 
